@@ -3,7 +3,7 @@ from keras.layers import *
 from keras.layers.advanced_activations import LeakyReLU
 from keras.activations import relu
 from keras.initializers import RandomNormal
-from instance_normalization import InstanceNormalization
+from keras_contrib.layers.normalization.instancenormalization import InstanceNormalization
 from keras.applications import *
 import tensorflow as tf
 import keras.backend as K
@@ -16,7 +16,7 @@ import numpy as np
 import glob
 from random import randint, shuffle
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "2"
+os.environ["CUDA_VISIBLE_DEVICES"] = ""
 
 imageSize = 256
 batchSize = 1
@@ -212,7 +212,10 @@ def cycle_variables(netG1):
     fn_generate = K.function([real_input], [fake_output, rec_input, alpha])
     return real_input, fake_output, rec_input, fn_generate, alpha
 
-netGA = load_model('./models_512/netG1527659649.3044329.h5')
+custom_objects = {
+    'InstanceNormalization': InstanceNormalization
+}
+netGA = load_model('./models_512/netG.h5', custom_objects=custom_objects)
 #netDA = load_model('./models/netD1526878347.025762.h5')
 
 real_A, fake_B, rec_A, cycleA_generate, alpha_A = cycle_variables(netGA)
