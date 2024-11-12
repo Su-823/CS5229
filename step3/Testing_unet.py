@@ -1,4 +1,5 @@
 import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 import numpy as np
 import glob
 from PIL import Image
@@ -12,7 +13,7 @@ from tensorflow.keras.preprocessing.image import img_to_array, load_img
 test_data_path = './Conditioning/testing_results_with_conditioning_data'
 test_img_folder = 'target_image'
 test_mask_folder = 'combined_mask'
-model_name = './model_perceptualloss_256_conv5_mse_0.9999_0.0001/unet-19-32.47-0.80.hdf5'
+model_name = './model_perceptualloss_256_conv5_mse_0.9999_0.0001/unet-04-26.42-0.89.hdf5'
 result_dir = './Conditioning/testing_results_with_conditioning_data/warping_results'
 
 
