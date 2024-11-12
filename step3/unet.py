@@ -97,6 +97,16 @@ class MyUnet:
         return model
 
     def train(self):
+        # List available devices
+        devices = tf.config.list_physical_devices()
+
+        # Print GPU devices
+        for device in devices:
+            if device.device_type == 'GPU':
+                print("GPU available:", device)
+            else:
+                print("Not a GPU device:", device)
+
         print("Loading data...")
         imgs_train, imgs_train_mask, imgs_train_label = self.load_data()
         print("Loading data done.")
