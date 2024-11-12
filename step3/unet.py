@@ -88,7 +88,7 @@ class MyUnet:
         merge9 = concatenate([conv1, up9], axis=3)
         conv9 = Conv2D(64, 3, activation='relu', padding='same', kernel_initializer='he_normal')(merge9)
         conv9 = Conv2D(64, 3, activation='relu', padding='same', kernel_initializer='he_normal')(conv9)
-        conv9 = Conv2D(3, 3, activation='sigmoid', padding='same', kernel_initializer='he_normal')(conv9)
+        conv9 = Conv2D(3, 3, activation='relu', padding='same', kernel_initializer='he_normal')(conv9)
 
         model = Model(inputs=[input_shirt, input_mask], outputs=conv9)
 
