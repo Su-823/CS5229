@@ -1,0 +1,24 @@
+#!/bin/bash
+#PBS -q normal
+#PBS -l select=1:ngpus=1
+#PBS -P personal-e1143584
+#PBS -l walltime=4:00:00
+
+# this is for old tensorflow 1.x version cpu configuration, should install requirements first, gpu can not converge
+# module load cuda/10.0
+# module load cudnn/10.0-7.6.5.32
+# source /home/users/nus/e1143584/miniconda3/bin/activate
+# conda activate virtualTryOn
+
+# module list
+# pip list
+
+# tensorflow 2.x version GPU
+module load tensorflow/2.8.1-py3-gpu
+pip install pillow
+( while true; do nvidia-smi >> ./nvidia_smi_output_step3_1114.log; sleep 60; done ) &
+
+cd /home/users/nus/e1143584/scratch/project/step3/CS5229/step3/
+python -u unet.py  >> step3_1114.log
+
+kill %1
