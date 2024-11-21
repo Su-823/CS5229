@@ -1,6 +1,6 @@
 
 ## Overall Architecture
-<img height="500" src="https://github.com/b01902041/Deep-Virtual-Try-on-with-Clothes-Transform/blob/master/readme_img/All.png">
+<img height="500" src="https://github.com/b01902041/Deep-Virtual-Try-on-with-Clothes-Transform/blob/master/readme_img/all.png">
 
 ## Dependencies
 python 3.6.13
@@ -9,6 +9,9 @@ Install dependencies using pip.
 pip install -r requirements.txt
 pip install git+https://github.com/keras-team/keras-contrib.git
 ```
+## Data
+Dataset we used:
+-[zalando-hd-resized](https://www.dropbox.com/scl/fi/xu08cx3fxmiwpg32yotd7/zalando-hd-resized.zip?rlkey=ks83mdv2pvmrdl2oo2bmmn69w&e=2&dl=0)
 
 ## Step1: CAGAN 
 <img height="200" src="https://github.com/b01902041/Deep-Virtual-Try-on-with-Clothes-Transform/blob/master/readme_img/CAGAN.png">
@@ -22,56 +25,6 @@ python CAGAN.py
 ```
 python Testing_with_fixed_data.py
 ```
-* Data: `MVC_image_pairs_resize_new.zip`
-
-### parameters in code ###
-
-#### Training: CAGAN.py
-
-* Data should be put in
-
-`"./MVC_image_pairs_resize_new/1/*.jpg"` (for person images)
-
-`"./MVC_image_pairs_resize_new/5/*.jpg"` (for clothes images)
-
-> 470: data = "data folder name"
->
-> 471: train_A = "person images folder name"
->
-> 473: filenames_1 = "person images folder name"
->
-> 474: filenames_5 = "clothes images folder name"
->
-> 617, 618: set "save model path" 
-
-#### Testing: Testing_with_fixed_data.py
-
-* Data should be put in
-
-`"./MVC_image_pairs_resize_new/1/*.jpg"` (for person images)
-
-`"./MVC_image_pairs_resize_new/5_test/*.jpg"` (for clothes images)
-
->215: set "model path"
->
->220: data = "data folder name"
->
->221: train_A = "person images folder name"
->
->222: filenames_5 = "clothes images folder name"
->
->224: out_root_dir = "output folder name"
->
->225: origin_dir = "save input person images"
->
->226: target_dir = "save target clothes images"
->
->227: output_dir = "save output images"
->
->228: mask_dir = "save output masks"
->
->230: testing_number = "how much data you want to test"
-
 
 ## Step2: Segmentation ##
 <img height="200" src="https://github.com/b01902041/Deep-Virtual-Try-on-with-Clothes-Transform/blob/master/readme_img/segmentation.png">
@@ -139,7 +92,4 @@ python Testing_unet.py
 `Combine_image.m`
 
 ## Results
-<img src="https://github.com/b01902041/Deep-Virtual-Try-on-with-Clothes-Transform/blob/master/readme_img/result1.png">
-<img src="https://github.com/b01902041/Deep-Virtual-Try-on-with-Clothes-Transform/blob/master/readme_img/result2.png">
-<img src="https://github.com/b01902041/Deep-Virtual-Try-on-with-Clothes-Transform/blob/master/readme_img/result3.png">
-<img src="https://github.com/b01902041/Deep-Virtual-Try-on-with-Clothes-Transform/blob/master/readme_img/condition.png">
+<img src="https://github.com/b01902041/Deep-Virtual-Try-on-with-Clothes-Transform/blob/master/readme_img/final_result.png">
