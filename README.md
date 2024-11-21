@@ -1,6 +1,6 @@
 
 ## Overall Architecture
-<img height="500" src="https://github.com/Su-823/CS5229/edit/master/readme_img/all.png">
+<img height="500" src="/readme_img/all.png">
 
 ## Dependencies
 python 3.6.13
