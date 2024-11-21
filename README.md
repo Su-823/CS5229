@@ -1,6 +1,6 @@
 
 ## Overall Architecture
-<img height="500" src="https://github.com/b01902041/Deep-Virtual-Try-on-with-Clothes-Transform/blob/master/readme_img/all.png">
+<img height="500" src="https://github.com/Su-823/CS5229/edit/master/readme_img/all.png">
 
 ## Dependencies
 python 3.6.13
@@ -14,7 +14,7 @@ Dataset we used:
 -[zalando-hd-resized](https://www.dropbox.com/scl/fi/xu08cx3fxmiwpg32yotd7/zalando-hd-resized.zip?rlkey=ks83mdv2pvmrdl2oo2bmmn69w&e=2&dl=0)
 
 ## Step1: CAGAN 
-<img height="200" src="https://github.com/b01902041/Deep-Virtual-Try-on-with-Clothes-Transform/blob/master/readme_img/CAGAN.png">
+<img height="200" src="https://github.com/Su-823/CS5229/edit/master/master/readme_img/CAGAN.png">
 
 ### code and data ###
 * Training:  `CAGAN.py`
@@ -27,7 +27,7 @@ python Testing_with_fixed_data.py
 ```
 
 ## Step2: Segmentation ##
-<img height="200" src="https://github.com/b01902041/Deep-Virtual-Try-on-with-Clothes-Transform/blob/master/readme_img/segmentation.png">
+<img height="200" src="https://github.com/Su-823/CS5229/edit/master/readme_img/segmentation.png">
 
 ### code ###
 * Training: `train_pgn.py`
@@ -43,7 +43,7 @@ python train_pgn.py
 
 
 ## Step3: Transform ##
-<img height="100" src="https://github.com/b01902041/Deep-Virtual-Try-on-with-Clothes-Transform/blob/master/readme_img/warping.png">
+<img height="100" src="https://github.com/Su-823/CS5229/edit/master/readme_img/warping.png">
 
 ### code and data ###
 
@@ -86,10 +86,10 @@ python Testing_unet.py
 
 
 ## Step4: Combination ##
-<img height="200" src="https://github.com/b01902041/Deep-Virtual-Try-on-with-Clothes-Transform/blob/master/readme_img/combine.png">
+<img height="200" src="https://github.com/Su-823/CS5229/edit/master/readme_img/combine.png">
 
 ### code ###
 `Combine_image.m`
 
 ## Results
-<img src="https://github.com/b01902041/Deep-Virtual-Try-on-with-Clothes-Transform/blob/master/readme_img/final_result.png">
+<img src="https://github.com/Su-823/CS5229/edit/master/readme_img/final_result.png">
