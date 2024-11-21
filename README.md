@@ -1,6 +1,3 @@
-# Deep Virtual Try-on with Clothes Transform
-Source code for paper "Deep Virtual Try-on with Clothes Transform"
-<img height="300" src="https://github.com/b01902041/Deep-Virtual-Try-on-with-Clothes-Transform/blob/master/readme_img/introduction.png">
 
 ## Overall Architecture
 <img height="500" src="https://github.com/b01902041/Deep-Virtual-Try-on-with-Clothes-Transform/blob/master/readme_img/All.png">
@@ -80,7 +77,10 @@ python Testing_with_fixed_data.py
 <img height="200" src="https://github.com/b01902041/Deep-Virtual-Try-on-with-Clothes-Transform/blob/master/readme_img/segmentation.png">
 
 ### code ###
-https://github.com/Engineering-Course/LIP_SSL
+* Training: `train_pgn.py`
+```
+python train_pgn.py
+```
 
 * Modify mask: `modify_mask.m`
 
@@ -103,7 +103,7 @@ python unet.py
 ```
 python Testing_unet.py
 ```
-* Data: `transform_data.zip` `transform_test_data.zip`
+
 
 ### parameters in code ###
 #### Training: unet.py
