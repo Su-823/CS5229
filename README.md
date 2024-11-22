@@ -29,10 +29,6 @@ python Testing_with_fixed_data.py
 ## Step2: Segmentation ##
 <img height="200" src="readme_img/segmentation.png">
 
-### checkpoint ###
-Checkpoint we used:
--[LIP_PGN](https://drive.google.com/drive/folders/1w_KrEBt4FKS-AjgvZGAIXUaiZnq9oRMa?usp=drive_link)
-
 ### code ###
 * Training: `train_pgn.py`
 ```
@@ -45,6 +41,9 @@ python train_pgn.py
 
 * Combine all the masks: `combine_with_CAGANmask.m`
 
+### checkpoint ###
+Checkpoint we used:
+-[LIP_PGN](https://drive.google.com/drive/folders/1w_KrEBt4FKS-AjgvZGAIXUaiZnq9oRMa?usp=drive_link)
 
 ## Step3: Transform ##
 ### checkpoint ###
