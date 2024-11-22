@@ -1,8 +1,4 @@
-
 # coding: utf-8
-
-# In[1]:
-
 
 from keras.models import Sequential, Model
 from keras.layers import *
@@ -10,52 +6,29 @@ from keras.layers.advanced_activations import LeakyReLU
 from keras.activations import relu
 from keras.initializers import RandomNormal
 
-
-# In[2]:
-
-
 from keras_contrib.layers.normalization.instancenormalization import InstanceNormalization
-
-
-# In[3]:
-
 
 from keras.applications import *
 import tensorflow as tf
 import keras.backend as K
 from keras.optimizers import RMSprop, SGD, Adam
 import time
-from IPython.display import clear_output
+
 import cv2
-from PIL import Image
 import numpy as np
 import glob
 from random import randint, shuffle
-#get_ipython().run_line_magic('matplotlib', 'inline')
-
-# In[4]:
-
 
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "2"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
-
-# ## Configuration
-
-# In[5]:
 
 
 K.set_learning_phase(1)
 
 
-# In[6]:
-
-
 channel_axis=-1
 channel_first = False
-
-
-# In[7]:
 
 
 nc_in = 9
@@ -81,10 +54,7 @@ lrD = 2e-4
 lrG = 2e-4
 
 
-# ## Define models
-
-# In[8]:
-
+# Define models
 
 # Weights initializations
 # bias are initailized as 0
@@ -95,9 +65,6 @@ def __conv_init(a):
     return k
 conv_init = RandomNormal(0, 0.02)
 gamma_init = RandomNormal(1., 0.02) # for batch normalization
-
-
-# In[9]:
 
 
 # Basic discriminator
@@ -147,13 +114,6 @@ def BASIC_D(nc_in, ndf, max_layers=3, use_sigmoid=True):
     return Model(inputs=[input_a], outputs=_)
 
 
-"""
-Unet or Resnet, which one is better for pix2pix model? 
-https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix/issues/117
-Reply from the author:
-    UNet gives slightly better results than Resnet in some of the pix2pix applications. 
-    We haven't varied the depth of the UNet model, but it might be worth trying.
-"""
 def UNET_G(isize, nc_in=3, nc_out=3, ngf=64, fixed_input_size=True, use_batchnorm=True):
     
     s = isize if fixed_input_size else None
@@ -244,45 +204,19 @@ def UNET_G(isize, nc_in=3, nc_out=3, ngf=64, fixed_input_size=True, use_batchnor
     
     return Model(inputs=inputs, outputs=[out])   
 
-
-# In[10]:
-
-
 netGA = UNET_G(imageSize, nc_G_inp, nc_G_out, ngf)
 #netGA.summary()
-
-
-# In[11]:
-
 
 netDA = BASIC_D(nc_D_inp, ndf, use_sigmoid = not use_lsgan)
 #netDA.summary()
 
 
-# ## cycle_variables
-
-# In[12]:
-
+# cycle_variables
 
 def cycle_variables(netG1):
-    """
-    Intermidiate params:
-        x_i: human w/ cloth i, shape=(128,96,3)
-        y_i: stand alone cloth i, shape=(128,96,3)
-        y_j: stand alone cloth j, shape=(128,96,3)
-        alpha: mask for x_i_j, shape=(128,96,1)
-        x_i_j: generated fake human swapping cloth i to j, shape=(128,96,3)
-    
-    Out:
-        real_input: concat[x_i, y_i, y_j], shape=(128,96,9)
-        fake_output: masked_x_i_j = alpha*x_i_j + (1-alpha)*x_i, shape=(128,96,3)
-        rec_input: output of the second generator (generating image similar to x_i), shape=(128,96,3)
-        fn_generate: a path from input to G_out and cyclic G_out
-    """
     real_input = netG1.inputs[0]
     fake_output = netG1.outputs[0]
-    # Legacy: how to split channels
-    # https://github.com/fchollet/keras/issues/5474
+
     x_i = Lambda(lambda x: x[:,:,:, 0:3])(real_input)
     y_i = Lambda(lambda x: x[:,:,:, 3:6])(real_input)
     y_j = Lambda(lambda x: x[:,:,:, 6:])(real_input)
@@ -299,25 +233,18 @@ def cycle_variables(netG1):
     return real_input, fake_output, rec_input, fn_generate, alpha
 
 
-# In[13]:
-
 
 real_A, fake_B, rec_A, cycleA_generate, alpha_A = cycle_variables(netGA)
 
 
-# # Loss Function
+# Loss Function
 
-# In[14]:
 
 
 if use_lsgan:
     loss_fn = lambda output, target : K.mean(K.abs(K.square(output-target)))
 else:
     loss_fn = lambda output, target : -K.mean(K.log(output+1e-12)*target+K.log(1-output+1e-12)*(1-target))
-
-
-# In[15]:
-
 
 def D_loss(netD, real, fake, rec):
     #x_i, y_i, y_j = tf.split(real, [3, 3, 3], 3)    
@@ -342,10 +269,6 @@ def D_loss(netD, real, fake, rec):
     loss_cyc = K.mean(K.abs(rec-x_i)) # cycle loss
     return loss_D, loss_G, loss_cyc
 
-
-# In[16]:
-
-
 loss_DA, loss_GA, loss_cycA = D_loss(netDA, real_A, fake_B, rec_A)
 loss_cyc = loss_cycA
 loss_id = K.mean(K.abs(alpha_A)) # loss of alpha
@@ -363,7 +286,7 @@ training_updates = Adam(lr=lrG, beta_1=0.5).get_updates(weightsG,[], loss_G)
 netG_train = K.function([real_A], [loss_GA, loss_cyc], training_updates)
 
 
-# # Load Image
+# Load Image
 # 
 # Filenames:
 # 
@@ -375,9 +298,6 @@ netG_train = K.function([real_A], [loss_GA, loss_cyc], training_updates)
 
 isRGB = True
 apply_da = False
-
-
-# In[18]:
 
 
 def load_data(file_pattern):
@@ -464,8 +384,6 @@ def read_image(fn):
 
 # Get filenames
 
-# In[19]:
-
 
 data = "MVC_image_pairs_resize_new"
 train_A = load_data('./{}/1/*.jpg'.format(data))
@@ -476,11 +394,7 @@ filenames_5 = load_data('./{}/5/*.jpg'.format(data))
 assert len(train_A)
 
 
-# ## Other utilities
-
-# In[20]:
-
-
+# Other utilities
 def minibatch(data, batchsize):
     length = len(data)
     epoch = i = 0
@@ -503,11 +417,6 @@ def minibatchAB(dataA, batchsize):
         ep1, A = batchA.send(tmpsize)
         tmpsize = yield ep1, A
 
-
-# In[21]:
-
-
-#from IPython.display import display
 def showX(X, rows=1):
     assert X.shape[0]%rows == 0
     int_X = ( (X+1)/2*255).clip(0,255).astype('uint8')
@@ -528,11 +437,6 @@ def showX(X, rows=1):
 
 
     Image.fromarray(int_X).save(os.path.join('results_512', str(time.time()) + '.jpg'))
-    #display(Image.fromarray(int_X))
-
-
-
-# In[22]:
 
 
 def showG(A):
@@ -547,38 +451,9 @@ def showG(A):
 # 
 # Show 8 results on the same target article.
 
-# In[ ]:
-
-
-def minibatch_demo(data, batchsize, fn_y_i=None):
-    length = len(data)
-    epoch = i = 0
-    tmpsize = None
-    shuffle(data)
-    while True:
-        size = tmpsize if tmpsize else batchsize
-        if i+size > length:
-            shuffle(data)
-            i = 0
-            epoch+=1    
-        rtn = [read_image(data[j], fn_y_i) for j in range(i,i+size)]
-        i+=size
-        tmpsize = yield epoch, np.float32(rtn)       
-
-def minibatchAB_demo(dataA, batchsize, fn_y_i=None):
-    batchA=minibatch_demo(dataA, batchsize, fn_y_i=fn_y_i)
-    tmpsize = None    
-    while True:        
-        ep1, A = batchA.send(tmpsize)
-        tmpsize = yield ep1, A
-
-
-
 # # Training
 # 
 # Show results every 50 iterations.
-
-# In[ ]:
 
 if __name__ == '__main__':
     t0 = time.time()
@@ -616,20 +491,6 @@ if __name__ == '__main__':
             errCyc_sum = errGA_sum = errDA_sum = errC_sum = 0
             netGA.save(os.path.join('models_512', 'netG' + str(time.time()) + '.h5'))
             netDA.save(os.path.join('models_512', 'netD' + str(time.time()) + '.h5'))
-
-    '''
-    # DEMO
-    len_fn = len(filenames_5)
-    assert len_fn > 0
-    idx = np.random.randint(len_fn)
-    fn = filenames_5[idx]
-
-    demo_batch = minibatchAB_demo(train_A, batchSize, fn)
-    epoch, A = next(demo_batch) 
-
-    _, A = demo_batch.send(8)
-    showG(A)
-    '''
 
 
 
