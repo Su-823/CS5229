@@ -21,9 +21,9 @@ Dataset we used:
 ```
 python CAGAN.py
 ```
-* Testing: `Testing_with_fixed_data.py`
+* Testing: `test.py`
 ```
-python Testing_with_fixed_data.py
+python test.py
 ```
 
 ## Step2: Segmentation ##
