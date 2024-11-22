@@ -1,9 +1,9 @@
 %% set folder name
-segment_mat_folder = fullfile('/Users/Claire/Documents/CSIEMaster/Research/CAGAN/testing_results_with_conditioning_data_5/modified_mask_png');
-segment_input_mat_folder = fullfile('/Users/Claire/Documents/CSIEMaster/Research/CAGAN/testing_results_with_conditioning_data_5/input_mask');
-CAGAN_mask_folder = fullfile('/Users/Claire/Documents/CSIEMaster/Research/CAGAN/testing_results_with_conditioning_data_5/mask');
-save_result_folder = fullfile('/Users/Claire/Documents/CSIEMaster/Research/CAGAN/testing_results_with_conditioning_data_5/combined_mask');
-save_face_folder = fullfile('/Users/Claire/Documents/CSIEMaster/Research/CAGAN/testing_results_with_conditioning_data_5/face_mask');
+segment_mat_folder = fullfile('E:\NUSSTUDY\CS5242\CIHP_PGN-master\output\output_mask');
+segment_input_mat_folder = fullfile('E:\NUSSTUDY\CS5242\CIHP_PGN-master\output\input_mask');
+CAGAN_mask_folder = fullfile('E:\NUSSTUDY\CS5242\CIHP_PGN-master\output\mask');
+save_result_folder = fullfile('E:\NUSSTUDY\CS5242\CIHP_PGN-master\output\combined_mask');
+save_face_folder = fullfile('E:\NUSSTUDY\CS5242\CIHP_PGN-master\output\face_mask');
 
 if ~exist(save_result_folder, 'dir')
     mkdir(save_result_folder);
@@ -14,14 +14,20 @@ if ~exist(save_face_folder, 'dir')
 end
 
 %% 
-segment_dir = dir(fullfile(segment_mat_folder, '*.png'));
+all_files = dir(fullfile(segment_mat_folder, '*.png'));
+segment_dir = all_files(~contains({all_files.name}, 'vis'));
 CAGAN_dir = dir(fullfile(CAGAN_mask_folder, '*.jpg'));
+if numel(segment_dir) ~= numel(CAGAN_dir)
+    error('文件数量不一致！segment_dir: %d, CAGAN_dir: %d', numel(segment_dir), numel(CAGAN_dir));
+end
 
 for i = 1 : numel(segment_dir)
     if mod(i, 10) == 0
         fprintf(1, 'processing %d (%d)...\n', i, numel(segment_dir));
     end
     
+    all_files = dir(fullfile(segment_mat_folder, '*.png'));
+    segment_dir = all_files(~contains({all_files.name}, 'vis'));
     segment_mask = imread(fullfile(segment_mat_folder, segment_dir(i).name));
     segment_input_mask = imread(fullfile(segment_input_mat_folder, segment_dir(i).name));
     CAGAN_mask = imread(fullfile(CAGAN_mask_folder, CAGAN_dir(i).name));
@@ -37,7 +43,6 @@ for i = 1 : numel(segment_dir)
     
     new_mask = zeros(row, column);
     face_mask = zeros(row, column);
-
     new_mask(segment_mask == 5) = 255;
     new_mask(segment_input_mask == 5) = 255;
     new_mask(CAGAN_mask > 200) = 255;
