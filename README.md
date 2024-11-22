@@ -47,6 +47,9 @@ python train_pgn.py
 
 
 ## Step3: Transform ##
+### checkpoint ###
+Checkpoint we used:
+-[step3](https://drive.google.com/file/d/1MhUoFfIoPUJFycfMeZzSa8mAXeZtWBF1/view?usp=drive_link)
 <img height="100" src="readme_img/warping.png">
 
 ### code and data ###
