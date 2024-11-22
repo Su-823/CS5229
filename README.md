@@ -25,6 +25,10 @@ python CAGAN.py
 ```
 python test.py
 ```
+### checkpoint ###
+
+Checkpoint we used: [step1](https://drive.google.com/file/d/1EMxf-tR_fxL1y9KPGZJRra1_nQJmdomI/view?usp=drive_link)
+
 
 ## Step2: Segmentation ##
 <img height="200" src="readme_img/segmentation.png">
