@@ -56,6 +56,12 @@ Checkpoint we used:
 python unet.py
 ```
 
+* Training with GPU: `unet.py` `data.py`
+```
+qsub step3.pbs
+```
+
+
 * Testing: `Testing_unet.py`
 ```
 python Testing_unet.py
