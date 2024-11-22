@@ -46,9 +46,7 @@ Checkpoint we used:
 -[LIP_PGN](https://drive.google.com/drive/folders/1w_KrEBt4FKS-AjgvZGAIXUaiZnq9oRMa?usp=drive_link)
 
 ## Step3: Transform ##
-### checkpoint ###
-Checkpoint we used:
--[step3](https://drive.google.com/file/d/1MhUoFfIoPUJFycfMeZzSa8mAXeZtWBF1/view?usp=drive_link)
+
 <img height="100" src="readme_img/warping.png">
 
 ### code and data ###
@@ -90,6 +88,9 @@ python Testing_unet.py
 >
 >20: result_dir = "save results path"
 
+### checkpoint ###
+Checkpoint we used:
+-[step3](https://drive.google.com/file/d/1MhUoFfIoPUJFycfMeZzSa8mAXeZtWBF1/view?usp=drive_link)
 
 ## Step4: Combination ##
 <img height="200" src="readme_img/combine.png">
