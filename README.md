@@ -31,7 +31,7 @@ python Testing_with_fixed_data.py
 
 ### checkpoint ###
 Checkpoint we used:
--[LIP_PGN]([https://www.dropbox.com/scl/fi/xu08cx3fxmiwpg32yotd7/zalando-hd-resized.zip?rlkey=ks83mdv2pvmrdl2oo2bmmn69w&e=2&dl=0](https://drive.google.com/drive/folders/1w_KrEBt4FKS-AjgvZGAIXUaiZnq9oRMa?usp=drive_link))
+-[LIP_PGN](https://drive.google.com/drive/folders/1w_KrEBt4FKS-AjgvZGAIXUaiZnq9oRMa?usp=drive_link)
 
 ### code ###
 * Training: `train_pgn.py`
